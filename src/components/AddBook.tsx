@@ -17,8 +17,8 @@ const AddBook = () => {
         userInfoDTOS: [],
         lastUpdatedBy: null,
         lastUpdateTime: null,
-        createdBy: '',
-        creationTime: ''
+        createdBy: null,
+        creationTime: null
     });
 
     const [genresInput, setGenresInput] = useState<GenreDTO[]>([]);
@@ -49,8 +49,8 @@ const AddBook = () => {
                 bookDTOS: [],
                 lastUpdatedBy: null,
                 lastUpdateTime: null,
-                createdBy: '',
-                creationTime: ''
+                createdBy: null,
+                creationTime: null
             }]);
         } else {
             setAuthorsInput([...authorsInput, {
@@ -61,8 +61,8 @@ const AddBook = () => {
                 bookDTOS: [],
                 lastUpdatedBy: null,
                 lastUpdateTime: null,
-                createdBy: '',
-                creationTime: ''
+                createdBy: null,
+                creationTime: null
             }]);
         }
     };
