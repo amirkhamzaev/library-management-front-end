@@ -1,55 +1,83 @@
 // src/components/AddBook.tsx
 import React, {useState} from 'react';
-import {Book} from '../interfaces/Book';
-import {Genre} from '../interfaces/Genre';
-import {Author} from '../interfaces/Author';
+import {BookDTO} from '../interfaces/BookDTO';
+import {GenreDTO} from '../interfaces/GenreDTO';
+import {AuthorDTO} from '../interfaces/AuthorDTO';
 import {addBook as addBookService} from '../services/bookService';
 import './AddBook.css'; // Import the CSS file
 
 const AddBook = () => {
-    const [book, setBook] = useState<Book>({
+    const [book, setBook] = useState<BookDTO>({
+        id: 0,
         name: '',
         description: '',
-        genres: [],
-        authors: []
+        likeCount: 0,
+        genreDTOS: [],
+        authorDTOS: [],
+        userInfoDTOS: [],
+        lastUpdatedBy: null,
+        lastUpdateTime: null,
+        createdBy: '',
+        creationTime: ''
     });
 
-    const [genresInput, setGenresInput] = useState<Genre[]>([]);
-    const [authorsInput, setAuthorsInput] = useState<Author[]>([]);
+    const [genresInput, setGenresInput] = useState<GenreDTO[]>([]);
+    const [authorsInput, setAuthorsInput] = useState<AuthorDTO[]>([]);
 
-    const handleGenreInputChange = (event: React.ChangeEvent<HTMLInputElement>, index: number, property: keyof Genre) => {
+    const handleGenreInputChange = (event: React.ChangeEvent<HTMLInputElement>, index: number, property: keyof GenreDTO) => {
         const newValues = [...genresInput];
-        newValues[index][property] = event.target.value;
+        // @ts-ignore
+        newValues[index][property as keyof GenreDTO] = event.target.value;
         setGenresInput(newValues);
-        setBook({...book, genres: newValues});
+        setBook({...book, genreDTOS: newValues});
     };
 
-    const handleAuthorInputChange = (event: React.ChangeEvent<HTMLInputElement>, index: number, property: keyof Author) => {
+    const handleAuthorInputChange = (event: React.ChangeEvent<HTMLInputElement>, index: number, property: keyof AuthorDTO) => {
         const newValues = [...authorsInput];
-        newValues[index][property] = event.target.value;
+        // @ts-ignore
+        newValues[index][property as keyof AuthorDTO] = event.target.value;
         setAuthorsInput(newValues);
-        setBook({...book, authors: newValues});
+        setBook({...book, authorDTOS: newValues});
     };
 
     const handleAddInput = (field: string) => {
-        if (field === 'genres') {
-            setGenresInput([...genresInput, {name: '', description: ''}]);
+        if (field === 'genreDTOS') {
+            setGenresInput([...genresInput, {
+                id: 0,
+                name: '',
+                description: '',
+                bookDTOS: [],
+                lastUpdatedBy: null,
+                lastUpdateTime: null,
+                createdBy: '',
+                creationTime: ''
+            }]);
         } else {
-            setAuthorsInput([...authorsInput, {fullName: '', livedYears: '', aboutAuthor: ''}]);
+            setAuthorsInput([...authorsInput, {
+                id: 0,
+                fullName: '',
+                livedYears: '',
+                aboutAuthor: '',
+                bookDTOS: [],
+                lastUpdatedBy: null,
+                lastUpdateTime: null,
+                createdBy: '',
+                creationTime: ''
+            }]);
         }
     };
 
     const handleRemoveInput = (index: number, field: string) => {
-        if (field === 'genres') {
+        if (field === 'genreDTOS') {
             const newValues = [...genresInput];
             newValues.splice(index, 1);
             setGenresInput(newValues);
-            setBook({...book, genres: newValues});
+            setBook({...book, genreDTOS: newValues});
         } else {
             const newValues = [...authorsInput];
             newValues.splice(index, 1);
             setAuthorsInput(newValues);
-            setBook({...book, authors: newValues});
+            setBook({...book, authorDTOS: newValues});
         }
     };
 
@@ -86,28 +114,28 @@ const AddBook = () => {
                             {genresInput.map((genre, index) => (
                                 <div key={index} className="input-field genre-input-field">
                                     <label>
-                                        Genre Name:
+                                        GenreDTO Name:
                                         <input type="text" value={genre.name}
                                                onChange={(e) => handleGenreInputChange(e, index, 'name')}
-                                               placeholder='"Sample Genre Name"'
+                                               placeholder='"Sample GenreDTO Name"'
                                                required className="input-field-style"/>
                                     </label>
                                     <label>
-                                        Genre Description:
+                                        GenreDTO Description:
                                         <input type="text" value={genre.description}
                                                onChange={(e) => handleGenreInputChange(e, index, 'description')}
-                                               placeholder='"Sample Genre Description"'
+                                               placeholder='"Sample GenreDTO Description"'
                                                required className="input-field-style"/>
                                     </label>
                                     <button type="button" className="remove-button"
-                                            onClick={() => handleRemoveInput(index, 'genres')}>
+                                            onClick={() => handleRemoveInput(index, 'genreDTOS')}>
                                         Remove
                                     </button>
                                 </div>
                             ))}
                         </div>
-                        <button type="button" className="add-button" onClick={() => handleAddInput('genres')}>+ Add
-                            Genre
+                        <button type="button" className="add-button" onClick={() => handleAddInput('genreDTOS')}>+ Add
+                            GenreDTO
                         </button>
                     </div>
                     <div className="input-group author-fields">
@@ -115,35 +143,35 @@ const AddBook = () => {
                             {authorsInput.map((author, index) => (
                                 <div key={index} className="input-field author-input-field">
                                     <label>
-                                        Author Full Name:
+                                        AuthorDTO Full Name:
                                         <input type="text" value={author.fullName}
                                                onChange={(e) => handleAuthorInputChange(e, index, 'fullName')}
-                                               placeholder='"Sample Author Full Name"'
+                                               placeholder='"Sample AuthorDTO Full Name"'
                                                required className="input-field-style"/>
                                     </label>
                                     <label>
-                                        Author Lived Years:
+                                        AuthorDTO Lived Years:
                                         <input type="text" value={author.livedYears}
                                                onChange={(e) => handleAuthorInputChange(e, index, 'livedYears')}
                                                placeholder='"Sample Lived Years"'
                                                required className="input-field-style"/>
                                     </label>
                                     <label>
-                                        About Author:
+                                        About AuthorDTO:
                                         <input type="text" value={author.aboutAuthor}
                                                onChange={(e) => handleAuthorInputChange(e, index, 'aboutAuthor')}
-                                               placeholder='"Sample About Author"'
+                                               placeholder='"Sample About AuthorDTO"'
                                                required className="input-field-style"/>
                                     </label>
                                     <button type="button" className="remove-button"
-                                            onClick={() => handleRemoveInput(index, 'authors')}>
+                                            onClick={() => handleRemoveInput(index, 'authorDTOS')}>
                                         Remove
                                     </button>
                                 </div>
                             ))}
                         </div>
-                        <button type="button" className="add-button" onClick={() => handleAddInput('authors')}>+ Add
-                            Author
+                        <button type="button" className="add-button" onClick={() => handleAddInput('authorDTOS')}>+ Add
+                            AuthorDTO
                         </button>
                     </div>
                 </div>

@@ -1,4 +1,4 @@
-/* AddBook.css */
+/* UpdateBook.css */
 
 /* Common styles for all flex containers */
 .flex-container {
@@ -8,7 +8,7 @@
 }
 
 /* Form styles */
-.add-book-form {
+.update-book-form {
     padding: 30px;
     border: 2px solid #ddd;
     border-radius: 10px;
@@ -31,7 +31,7 @@
 }
 
 /* GenreDTO and author input field styles */
-.genre-author-fields{
+.genre-author-fields {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -42,7 +42,6 @@
     padding: 15px;
     border-radius: 5px;
     margin-bottom: 20px;
-    /*width: 100%;*/
     font-size: 16px;
 }
 
@@ -55,6 +54,7 @@
     border-radius: 5px;
     background-color: #e6f7ff;
 }
+
 .author-input-field {
     background-color: #ffd1e4;
 }
@@ -65,12 +65,10 @@
     background-color: #fff0f6;
 }
 
-
-
 /* Button styles */
 .add-button,
 .remove-button,
-.save-button {
+.update-button {
     padding: 15px 30px;
     color: white;
     border: none;
@@ -89,7 +87,7 @@
     width: 100%;
 }
 
-.save-button {
+.update-button {
     width: 100%;
     background-color: #4CAF50;
 }
@@ -107,7 +105,7 @@
 /* Button hover styles */
 .add-button:hover,
 .remove-button:hover,
-.save-button:hover {
+.update-button:hover {
     transform: scale(1.02);
 }
 
