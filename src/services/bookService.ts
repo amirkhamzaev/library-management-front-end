@@ -70,3 +70,19 @@ export const updateBook = async (id: string, book: BookDTO, apiEndpoint: string 
         throw error; // re-throw the error to be handled by the caller
     }
 };
+
+export const deleteBook = async (id: string, apiEndpoint: string = `http://127.0.0.0:8080/api/v1/book/${id}`): Promise<void> => {
+    try {
+        const response: AxiosResponse = await axios.delete(apiEndpoint, {timeout: 5000});
+
+        console.log('Server response:', response);
+
+        if (response.status !== 200) {
+            throw new Error(`Request failed with status code ${response.status}`);
+        }
+
+    } catch (error) {
+        console.error(`An error occurred while deleting the book with id ${id}.`, error);
+        throw error; // re-throw the error to be handled by the caller
+    }
+};
